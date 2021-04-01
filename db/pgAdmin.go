@@ -38,6 +38,13 @@ func CreateContent(data *types.Movie) error {
 		return e.ErrDatabaseErrored
 	}
 
+	var movieDoesExist bool
+
+	_, _ = db.Model(data).Query(movieDoesExist, `select * from movies where name ~* ?`, data.Name)
+
+	if movieDoesExist {
+		return e.ErrDataAlreadyExists
+	}
 	err = db.Insert(data)
 
 	if err != nil {
