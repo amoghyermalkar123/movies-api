@@ -20,5 +20,5 @@ check:
 
 # to run all the tests
 test:
-	# cd handlers/tests && ginkgo -v
+	cd handlers/tests && ginkgo -v
 	cd db/tests && ginkgo -v
