@@ -18,7 +18,7 @@ start:
 check:
 	go vet -asmdecl -bools -assign ./
 
-# to run all the tests
+# to run all the tests in the project
 test:
 	cd handlers/tests && ginkgo -v
 	cd db/tests && ginkgo -v
