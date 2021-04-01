@@ -31,4 +31,4 @@ Task for building Movies API (like IMDB)
   view what happens in those cases.
 - I have written connection verification tests for http handlers.
 - I have written tests for the database functions.
-
+- `movies` table here would mean all kinds of shows, (movies, documentares, tv shows, etc)
