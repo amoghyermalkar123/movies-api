@@ -27,7 +27,7 @@ Task for building Movies API (like IMDB)
 - `db` is the database layer
 
 ##### Additionally:
-- I have added all api endpoint requests, in addition to that, i have added edge cases, where we pass on wrong data, to 
+- I have added all api endpoint requests to the postman collection in addition to that, i have added edge cases, where we pass on wrong data, to 
   view what happens in those cases.
 - I have written connection verification tests for http handlers.
 - I have written tests for the database functions.
