@@ -21,7 +21,7 @@ Task for building Movies API (like IMDB)
 - `make check`
   - runs a code sanity check script
 
-# Folder structure : (#### brief overview)
+# Folder structure : (brief overview)
 - `handlers` consist http handlers
 - `auth` has some basic naive auth helpers
 - `db` is the database layer
