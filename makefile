@@ -22,7 +22,3 @@ check:
 test:
 	cd handlers/tests && ginkgo -v
 	cd db/tests && ginkgo -v
-
-# restore database dump
-restore:
-	pg_restore -U postgres -d movieserver -1 dump.sql
