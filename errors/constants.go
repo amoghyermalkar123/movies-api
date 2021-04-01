@@ -7,6 +7,7 @@ func (err constError) Error() string {
 }
 
 const (
-	ErrDatabaseErrored = constError("database errored out")
-	ErrNoDataFound     = constError("no data found")
+	ErrDatabaseErrored   = constError("database errored out")
+	ErrNoDataFound       = constError("no data found")
+	ErrDataAlreadyExists = constError("content already exists")
 )
