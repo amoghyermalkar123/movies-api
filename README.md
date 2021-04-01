@@ -20,3 +20,15 @@ Task for building Movies API (like IMDB)
   - runs tests
 - `make check`
   - runs a code sanity check script
+
+# Folder structure : (#### brief overview)
+- `handlers` consist http handlers
+- `auth` has some basic naive auth helpers
+- `db` is the database layer
+
+##### Additionally:
+- I have added all api endpoint requests, in addition to that, i have added edge cases, where we pass on wrong data, to 
+  view what happens in those cases.
+- I have written connection verification tests for http handlers.
+- I have written tests for the database functions.
+
