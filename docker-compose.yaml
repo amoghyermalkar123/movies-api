@@ -1,0 +1,18 @@
+version: "3.1"
+
+services:
+  db:
+    image: postgis/postgis:11-2.5
+    volumes:
+      - ${PWD}/dump:/app/dump
+    environment:
+      POSTGRES_USER : "amogh"
+      POSTGRES_PASSWORD: "amogh"
+    ports:
+      - 5432:5432
+      
+  movieserver:
+    build: 
+      context: . 
+    ports: 
+      - 8000:8000
