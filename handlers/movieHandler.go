@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"movieserver/db"
 	e "movieserver/errors"
 	"movieserver/mappers"
 	m "movieserver/messages"
@@ -17,7 +16,7 @@ func (h *Handler) SearchForMovies(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, e.EmptyRequestError)
 	}
 
-	response, err := db.GetMovieSearchDetails(name)
+	response, err := h.Db.GetMovieSearchDetails(name)
 
 	if err != nil {
 		if err == e.ErrNoDataFound {

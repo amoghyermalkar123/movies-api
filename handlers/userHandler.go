@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"movieserver/db"
 	e "movieserver/errors"
 	"movieserver/jsonTypes"
 	"movieserver/mappers"
@@ -19,7 +18,7 @@ func (h *Handler) Authenticate(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, e.BindError)
 	}
 
-	isAuthenticated := h.auth.AuthenticateUserDetails(userDetails)
+	isAuthenticated := h.Auth.AuthenticateUserDetails(userDetails)
 
 	if isAuthenticated {
 		return c.JSON(http.StatusOK, m.Success("Authenticated"))
@@ -30,13 +29,13 @@ func (h *Handler) Authenticate(c echo.Context) error {
 func (h *Handler) SearchUserInteractedMovies(c echo.Context) error {
 	id, _ := strconv.Atoi(c.Param("id"))
 
-	isAuthenticated := h.auth.UserCheck(int64(id))
+	isAuthenticated := h.Auth.UserCheck(int64(id))
 
 	if !isAuthenticated {
 		return c.JSON(http.StatusInternalServerError, e.AuthError)
 	}
 
-	response, err := db.GetUserInteractedMovies(int64(id))
+	response, err := h.Db.GetUserInteractedMovies(int64(id))
 
 	if err != nil {
 		if err == e.ErrNoDataFound {
@@ -56,7 +55,7 @@ func (h *Handler) RateMovie(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, e.BindError)
 	}
 
-	isAuthenticated := h.auth.UserCheck(ratingData.UserID)
+	isAuthenticated := h.Auth.UserCheck(ratingData.UserID)
 
 	if !isAuthenticated {
 		return c.JSON(http.StatusInternalServerError, e.AuthError)
@@ -68,7 +67,7 @@ func (h *Handler) RateMovie(c echo.Context) error {
 
 	dbRateMovieData := mappers.MapJsonRateMovieToPgrateMovie(ratingData)
 
-	err := db.RateMovie(dbRateMovieData)
+	err := h.Db.RateMovie(dbRateMovieData)
 
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, e.RateMovieError)
@@ -84,7 +83,7 @@ func (h *Handler) CommentOnMovie(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, e.BindError)
 	}
 
-	isAuthenticated := h.auth.UserCheck(commentData.UserID)
+	isAuthenticated := h.Auth.UserCheck(commentData.UserID)
 
 	if !isAuthenticated {
 		return c.JSON(http.StatusInternalServerError, e.AuthError)
@@ -96,7 +95,7 @@ func (h *Handler) CommentOnMovie(c echo.Context) error {
 
 	dbComment := mappers.MapJsonCommentToPgComment(commentData)
 
-	err := db.CommentOnMovie(dbComment)
+	err := h.Db.CommentOnMovie(dbComment)
 
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, e.CommentMovieError)

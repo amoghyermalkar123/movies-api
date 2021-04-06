@@ -7,15 +7,10 @@ import (
 	"github.com/go-pg/pg"
 )
 
-func CheckAdminDetails(adminID int64, email, password string) error {
-	db, err := getDbSession()
-
-	if err != nil {
-		return e.ErrDatabaseErrored
-	}
+func (d *Db) CheckAdminDetails(adminID int64, email, password string) error {
 
 	dets := &types.User{}
-	err = db.Model(dets).
+	err := d.dba.Model(dets).
 		Where("id = ?", adminID).
 		Where("email = ?", email).
 		Where("password = ?", password).
@@ -31,16 +26,10 @@ func CheckAdminDetails(adminID int64, email, password string) error {
 	return nil
 }
 
-func CreateContent(data *types.Movie) error {
-	db, err := getDbSession()
-
-	if err != nil {
-		return e.ErrDatabaseErrored
-	}
-
+func (d *Db) CreateContent(data *types.Movie) error {
 	movieDoesExist := &types.Movie{}
 
-	_, _ = db.Model(data).Query(movieDoesExist, `
+	_, _ = d.dba.Model(data).Query(movieDoesExist, `
 	select name from movies where name = ?
 	`, data.Name)
 
@@ -48,7 +37,7 @@ func CreateContent(data *types.Movie) error {
 		return e.ErrDataAlreadyExists
 	}
 
-	err = db.Insert(data)
+	err := d.dba.Insert(data)
 
 	if err != nil {
 		return err

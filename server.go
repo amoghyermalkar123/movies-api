@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"movieserver/db"
 	"movieserver/handlers"
 	"os"
 
@@ -29,6 +30,13 @@ func main() {
 	e.POST("/create_content/", h.AddNewContent)
 
 	go setEnv()
+
+	db, err := db.StartDbSession()
+	if err != nil {
+		panic(err)
+	}
+	h.Db = db
+	h.Auth.Db = db
 	// Start server
 	e.Logger.Fatal(e.Start(":8000"))
 }

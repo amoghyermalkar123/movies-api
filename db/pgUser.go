@@ -7,15 +7,9 @@ import (
 	"github.com/go-pg/pg"
 )
 
-func GetUserDetails(userID int64, userType string) (*types.User, error) {
-	db, err := getDbSession()
-
-	if err != nil {
-		return nil, e.ErrDatabaseErrored
-	}
-
+func (d *Db) GetUserDetails(userID int64, userType string) (*types.User, error) {
 	dets := &types.User{}
-	err = db.Model(dets).
+	err := d.dba.Model(dets).
 		Where("id = ?", userID).
 		Where("user_type = ?", userType).
 		Select(dets)
@@ -29,15 +23,10 @@ func GetUserDetails(userID int64, userType string) (*types.User, error) {
 	return dets, nil
 }
 
-func CheckUserDetails(ID int64, email, password string) error {
-	db, err := getDbSession()
-
-	if err != nil {
-		return e.ErrDatabaseErrored
-	}
+func (d *Db) CheckUserDetails(ID int64, email, password string) error {
 
 	dets := &types.User{}
-	err = db.Model(dets).
+	err := d.dba.Model(dets).
 		Where("id = ?", ID).
 		Where("email = ?", email).
 		Where("password = ?", password).

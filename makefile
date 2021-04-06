@@ -6,14 +6,6 @@ clean:
 build:
 	go build
 
-# install all dependencies
-setup:
-	go mod download
-
-# start the HTTP server
-start:
-	go run server.go
-
 # checks code quality 
 check:
 	go vet -asmdecl -bools -assign ./
@@ -22,3 +14,10 @@ check:
 test:
 	cd handlers/tests && ginkgo -v
 	cd db/tests && ginkgo -v
+
+reload:
+	sudo docker-compose build 
+	docker-compose up
+
+start:
+	docker-compose up

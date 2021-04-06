@@ -2,8 +2,10 @@ package handlers
 
 import (
 	"movieserver/auth"
+	"movieserver/db"
 )
 
 type Handler struct {
-	auth auth.Auth
+	Auth auth.Auth
+	Db   *db.Db
 }

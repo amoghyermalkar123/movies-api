@@ -9,6 +9,17 @@ import (
 	"go.uber.org/zap"
 )
 
+func StartDbSession() (db *Db, err error) {
+	dbIns, err := getDbSession()
+	if err != nil {
+		return nil, err
+	}
+	db = &Db{
+		dba: dbIns,
+	}
+	return db, nil
+}
+
 func getDbSession() (*pg.DB, error) {
 	cfg := configurations.InitConfigs()
 
